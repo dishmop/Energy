@@ -18,13 +18,14 @@ public class GameManager : MonoBehaviour {
     bool lighton = false;
 
     public PlotManager plotter;
+    public PlotManager plotter2;
 
     void Start()
     {
-        //PlotManager.Instance.PlotCreate("Demand", 0, 200, Color.green, new Vector2(100, 400));
-        //PlotManager.Instance.PlotCreate("Supply", Color.red, "Demand");
+        plotter.PlotCreate("Demand", Color.green);
+        plotter.PlotCreate("Supply", Color.red);
 
-        plotter.PlotCreate("Surplus", -100, 100, Color.black, new Vector2(400, 400));
+        plotter2.PlotCreate("Surplus", Color.black);
     }
 
     void Update()
@@ -60,7 +61,7 @@ public class GameManager : MonoBehaviour {
         plotter.PlotAdd("Supply", supply);
         plotter.PlotAdd("Demand", demand);
 
-        plotter.PlotAdd("Surplus", excess);
+        plotter2.PlotAdd("Surplus", excess);
     }
 
     public void TurnHandle()
