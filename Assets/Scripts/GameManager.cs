@@ -19,8 +19,7 @@ public class GameManager : MonoBehaviour {
 
     bool lighton = false;
 
-    public FreePlotter plotter;
-    public FreePlotter plotter2;
+    public ProPlotter plotter;
 
     CustomerType customer0;
 
@@ -28,8 +27,6 @@ public class GameManager : MonoBehaviour {
     {
         plotter.NewPlot("supply", Color.green);
         plotter.NewPlot("demand", Color.red);
-
-        plotter2.NewPlot("surplus", Color.blue);
 
         customer0 = new StandardEmployment();
     }
@@ -60,6 +57,8 @@ public class GameManager : MonoBehaviour {
             bulb.intensity = 0;
         }
 
+        demand = Sample.Normal(customer0.TotalMean(Day.Monday, Time.instance.DayFraction,0), Mathf.Sqrt(customer0.TotalVariance(Day.Monday, Time.instance.DayFraction,0)),true);
+
         float excess = supply - demand;
 
         supplyText.text = "Supply: " + supply + "W";
@@ -67,8 +66,8 @@ public class GameManager : MonoBehaviour {
 
         excessText.text = "Surplus: " + excess + "W";
 
-        //plotter.AddPoint("supply", Time.instance.Days, supply);
-        plotter.AddPoint("demand", 24f*(Time.instance.Days + Time.instance.DayFraction), Sample.Normal(customer0.TotalMean(Day.Monday, Time.instance.DayFraction,0), Mathf.Sqrt(customer0.TotalVariance(Day.Monday, Time.instance.DayFraction,0)),true));
+        plotter.AddPoint("supply", 24f * (Time.instance.Days + Time.instance.DayFraction), supply);
+        plotter.AddPoint("demand", 24f*(Time.instance.Days + Time.instance.DayFraction), demand);
 
         //plotter2.AddPoint("surplus", Time.instance.Days, excess);
 
