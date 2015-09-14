@@ -66,11 +66,8 @@ public class GameManager : MonoBehaviour {
 
         excessText.text = "Surplus: " + excess + "W";
 
-        plotter.AddPoint("supply", 24f * (Time.instance.Days + Time.instance.DayFraction), supply);
-        plotter.AddPoint("demand", 24f*(Time.instance.Days + Time.instance.DayFraction), demand);
-
-        //plotter2.AddPoint("surplus", Time.instance.Days, excess);
-
+        plotter.AddPoint("supply", 24f * Time.instance.DayFraction, supply);
+        plotter.AddPoint("demand", 24f * Time.instance.DayFraction, demand);
     }
 
     public void TurnHandle()
