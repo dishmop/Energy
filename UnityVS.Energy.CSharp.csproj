@@ -63,19 +63,18 @@
     <Reference Include="UnityEngine.Analytics">
       <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Plotter\PlotManager.cs" />
+    <Compile Include="Assets\FreePlotter\FreePlotter.cs" />
+    <Compile Include="Assets\Scripts\CsvFile.cs" />
+    <Compile Include="Assets\Scripts\CustomerType.cs" />
+    <Compile Include="Assets\Scripts\CustomerTypes\StandardEmployment.cs" />
+    <Compile Include="Assets\Scripts\EnergyProfile.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Sample.cs" />
     <Compile Include="Assets\Scripts\Time.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />

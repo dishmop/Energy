@@ -2,28 +2,61 @@
 using UnityEngine.UI;
 using System.Collections;
 
+public enum Day
+{
+    Monday,
+    Tuesday,
+    Wendesday,
+    Thursday,
+    Friday,
+    Saturday,
+    Sunday
+}
+
 public class Time : MonoBehaviour {
 
-    float time; // in days
+    public static Time instance;
+
+    int days;
+    float time;
 
     float secondsPerDay = 30;
 
     public Text timeText;
 
-	// Use this for initialization
+    public int Days
+    {
+        get { return days; }
+    }
+
+    public float DayFraction
+    {
+        get { return time; }
+    }
+
+    public int Hours
+    {
+        get { return (int)(DayFraction * 24f); }
+    }
+
+    public int Minutes
+    {
+        get { return (int)((DayFraction - Hours / 24f) * 24f * 60f); }
+    }
+
 	void Start () {
-	
+        instance = this;
 	}
 	
-	// Update is called once per frame
 	void Update () {
         time += UnityEngine.Time.deltaTime/secondsPerDay;
 
-        float todaytime = time - (int)time;
-        int hours = (int)(todaytime * 24f);
-        int minutes = (int)((todaytime - hours / 24f) * 24f * 60f);
+        while (time > 1.0f)
+        {
+            time -= 1f;
+            days++;
+        }
 
-
-        timeText.text = hours.ToString("00")+":"+minutes.ToString("00");
+        timeText.text = Hours.ToString("00")+":"+Minutes.ToString("00");
 	}
 }

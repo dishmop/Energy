@@ -12,24 +12,33 @@ public class GameManager : MonoBehaviour {
 
     public Text lightButtonText;
 
+    public int numCustomers;
+
     float supply = 0.0f; // in W
     float demand = 0.0f; // in W
 
     bool lighton = false;
 
-    public PlotManager plotter;
-    public PlotManager plotter2;
+    public FreePlotter plotter;
+    public FreePlotter plotter2;
+
+    CustomerType customer0;
 
     void Start()
     {
-        plotter.PlotCreate("Demand", Color.green);
-        plotter.PlotCreate("Supply", Color.red);
+        plotter.NewPlot("supply", Color.green);
+        plotter.NewPlot("demand", Color.red);
 
-        plotter2.PlotCreate("Surplus", Color.black);
+        plotter2.NewPlot("surplus", Color.blue);
+
+        customer0 = new StandardEmployment();
     }
 
     void Update()
     {
+        customer0.numCustomers = numCustomers;
+
+
         supply = 3*Mathf.Abs(generatorHandle.angularVelocity.x);
 
         if (lighton)
@@ -58,10 +67,11 @@ public class GameManager : MonoBehaviour {
 
         excessText.text = "Surplus: " + excess + "W";
 
-        plotter.PlotAdd("Supply", supply);
-        plotter.PlotAdd("Demand", demand);
+        //plotter.AddPoint("supply", Time.instance.Days, supply);
+        plotter.AddPoint("demand", 24f*(Time.instance.Days + Time.instance.DayFraction), Sample.Normal(customer0.TotalMean(Day.Monday, Time.instance.DayFraction,0), Mathf.Sqrt(customer0.TotalVariance(Day.Monday, Time.instance.DayFraction,0)),true));
 
-        plotter2.PlotAdd("Surplus", excess);
+        //plotter2.AddPoint("surplus", Time.instance.Days, excess);
+
     }
 
     public void TurnHandle()
