@@ -23,6 +23,13 @@ public class GameManager : MonoBehaviour {
 
     CustomerType customer0;
 
+    float sampleInterval;
+
+    float prevSample = 0;
+    float nextSample = 0;
+
+    float timeSinceSample = float.PositiveInfinity;
+
     void Start()
     {
         plotter.NewPlot("supply", Color.green);
@@ -57,7 +64,20 @@ public class GameManager : MonoBehaviour {
             bulb.intensity = 0;
         }
 
-        demand = Sample.Normal(customer0.TotalMean(Day.Monday, Time.instance.DayFraction,0), Mathf.Sqrt(customer0.TotalVariance(Day.Monday, Time.instance.DayFraction,0)),true);
+        timeSinceSample += Time.instance.DeltaTime;
+
+        sampleInterval = 0.05f / (customer0.numCustomers>0?customer0.numCustomers:1);
+        plotter.VerticalMax = 1000 * (customer0.numCustomers > 0 ? customer0.numCustomers : 1);
+        plotter.VerticalGridStep = plotter.VerticalMax / 5;
+
+        if (timeSinceSample > sampleInterval)
+        {
+            prevSample = nextSample;
+            nextSample = Sample.Normal(customer0.TotalMean(Day.Monday, Mathf.Repeat(Time.instance.DayFraction + sampleInterval, 1f), 0), Mathf.Sqrt(customer0.TotalVariance(Day.Monday, Mathf.Repeat(Time.instance.DayFraction + sampleInterval, 1f), 0)), true);
+            timeSinceSample = 0;
+        }
+
+        demand = Mathf.Lerp(prevSample, nextSample, timeSinceSample / sampleInterval);
 
         float excess = supply - demand;
 

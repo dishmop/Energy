@@ -44,12 +44,19 @@ public class Time : MonoBehaviour {
         get { return (int)((DayFraction - Hours / 24f) * 24f * 60f); }
     }
 
+    float deltaTime;
+    public float DeltaTime
+    {
+        get { return deltaTime; }
+    }
+
 	void Start () {
         instance = this;
 	}
 	
 	void Update () {
-        time += UnityEngine.Time.deltaTime/secondsPerDay;
+        deltaTime = UnityEngine.Time.deltaTime / secondsPerDay;
+        time += deltaTime;
 
         while (time > 1.0f)
         {

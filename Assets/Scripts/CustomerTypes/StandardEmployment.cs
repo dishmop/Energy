@@ -8,6 +8,6 @@
 
     protected override float standardDeviation(Day day, float time, float winter)
     {
-        return 10f;
+        return 30f;
     }
 }
