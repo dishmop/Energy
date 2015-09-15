@@ -70,13 +70,17 @@
   <ItemGroup>
     <Compile Include="Assets\ProPlotter\ExampleScene.cs" />
     <Compile Include="Assets\ProPlotter\ProPlotter.cs" />
+    <Compile Include="Assets\Scripts\BuyPanel.cs" />
     <Compile Include="Assets\Scripts\CsvFile.cs" />
-    <Compile Include="Assets\Scripts\CustomerType.cs" />
+    <Compile Include="Assets\Scripts\CustomerManager.cs" />
     <Compile Include="Assets\Scripts\EnergyProfile.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Generator.cs" />
+    <Compile Include="Assets\Scripts\Interface.cs" />
+    <Compile Include="Assets\Scripts\Researchable.cs" />
     <Compile Include="Assets\Scripts\Sample.cs" />
     <Compile Include="Assets\Scripts\Solar.cs" />
+    <Compile Include="Assets\Scripts\SolicitPanel.cs" />
     <Compile Include="Assets\Scripts\Time.cs" />
     <Compile Include="Assets\Scripts\nuclear.cs" />
   </ItemGroup>

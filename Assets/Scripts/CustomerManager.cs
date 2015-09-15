@@ -1,5 +1,7 @@
-﻿public class CustomerType {
-    int[] numCustomers = new int[8];
+﻿public class CustomerManager {
+    public static CustomerManager instance;
+
+    public int[] numCustomers = new int[8];
     EnergyProfile[,] profile = new EnergyProfile[8, 15];
 
     public int TotalCustomers
@@ -16,8 +18,9 @@
         }
     }
 
-    public CustomerType()
+    public CustomerManager()
     {
+        instance = this;
         for (int i = 0; i < 8; i++)
         {
             numCustomers[i] = 0;
@@ -74,6 +77,7 @@
         return meantotal;
     }
 
+    [System.Obsolete]
     public void AddCustomer(int profileNum)
     {
         numCustomers[profileNum]++;
