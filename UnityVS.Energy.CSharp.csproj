@@ -77,6 +77,7 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Generator.cs" />
     <Compile Include="Assets\Scripts\Interface.cs" />
+    <Compile Include="Assets\Scripts\ResearchPanel.cs" />
     <Compile Include="Assets\Scripts\Researchable.cs" />
     <Compile Include="Assets\Scripts\Sample.cs" />
     <Compile Include="Assets\Scripts\Solar.cs" />

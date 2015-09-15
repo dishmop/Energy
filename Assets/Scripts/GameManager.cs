@@ -34,8 +34,6 @@ public class GameManager : MonoBehaviour {
         customerDemand = new CustomerManager();
     }
 
-    bool shortened = false;
-
     void Update()
     {
         supply = 3*Mathf.Abs(generatorHandle.angularVelocity.x);
