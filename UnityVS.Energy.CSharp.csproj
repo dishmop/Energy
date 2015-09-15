@@ -68,14 +68,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\ProPlotter\ExampleScene.cs" />
     <Compile Include="Assets\ProPlotter\ProPlotter.cs" />
     <Compile Include="Assets\Scripts\CsvFile.cs" />
     <Compile Include="Assets\Scripts\CustomerType.cs" />
-    <Compile Include="Assets\Scripts\CustomerTypes\StandardEmployment.cs" />
     <Compile Include="Assets\Scripts\EnergyProfile.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Generator.cs" />
     <Compile Include="Assets\Scripts\Sample.cs" />
+    <Compile Include="Assets\Scripts\Solar.cs" />
     <Compile Include="Assets\Scripts\Time.cs" />
+    <Compile Include="Assets\Scripts\nuclear.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
 </Project>

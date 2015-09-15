@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
@@ -20,8 +21,10 @@ public class GameManager : MonoBehaviour {
     bool lighton = false;
 
     public ProPlotter plotter;
+    public ProPlotter surplus;
 
-    CustomerType customer0;
+    CustomerType customerDemand;
+    List<Generator> generators = new List<Generator>();
 
     float sampleInterval;
 
@@ -35,14 +38,15 @@ public class GameManager : MonoBehaviour {
         plotter.NewPlot("supply", Color.green);
         plotter.NewPlot("demand", Color.red);
 
-        customer0 = new StandardEmployment();
+        surplus.NewPlot("surplus", Color.blue);
+
+        customerDemand = new CustomerType();
     }
+
+    bool shortened = false;
 
     void Update()
     {
-        customer0.numCustomers = numCustomers;
-
-
         supply = 3*Mathf.Abs(generatorHandle.angularVelocity.x);
 
         if (lighton)
@@ -54,40 +58,84 @@ public class GameManager : MonoBehaviour {
             demand = 0;
         }
 
-        if (lighton)
+        timeSinceSample += Time.instance.DeltaTime;
+
+        sampleInterval = 0.05f / (customerDemand.TotalCustomers > 0 ? customerDemand.TotalCustomers : 1);
+        //plotter.VerticalMax = 10000 * (customer0.TotalCustomers > 0 ? customer0.TotalCustomers : 1);
+        plotter.VerticalGridStep = plotter.VerticalMax / 5;
+
+        surplus.VerticalGridStep = surplus.VerticalRange / 5;
+
+        if (timeSinceSample > sampleInterval)
+        {
+            prevSample = nextSample;
+
+            float mean = customerDemand.TotalMean(Time.instance.WeekDay, Time.instance.CurrentSeason, Mathf.Repeat(Time.instance.DayFraction + sampleInterval, 1f), 0);
+            float variance = customerDemand.TotalVariance(Time.instance.WeekDay, Time.instance.CurrentSeason, Mathf.Repeat(Time.instance.DayFraction + sampleInterval, 1f), 0);
+
+            nextSample = Sample.Normal(mean, Mathf.Sqrt(variance), true);
+            timeSinceSample = 0;
+        }
+
+        demand = Mathf.Lerp(prevSample, nextSample, timeSinceSample / sampleInterval);
+
+        supply = 0;// gen.Output(Time.instance.DayFraction, Time.instance.CurrentSeason);
+
+        foreach (var generator in generators)
+        {
+            supply += generator.Output(Time.instance.DayFraction, Time.instance.CurrentSeason);
+        }
+
+        float excess = supply - demand;
+
+        float displaytime;
+
+        if (Time.instance.secondsPerDay <= 3f)
+        {
+            displaytime = (int)Time.instance.WeekDay + Time.instance.DayFraction;
+
+            if (!shortened) // do the first time we hit 3seconds
+            {
+                plotter.HorizontalAxisLabelSuffix = "";
+
+                plotter.HorizontalGridStep = 1;
+
+                plotter.HorizontalLabels = System.Enum.GetNames(typeof(Day));
+
+                plotter.HorizontalRange = 7;
+                plotter.ClearAll();
+
+                surplus.HorizontalGridStep = 1;
+                surplus.HorizontalRange = 7;
+                surplus.ClearAll();
+
+                shortened = true;
+            }
+        }
+        else
+        {
+            displaytime = 24f * Time.instance.DayFraction;
+        }
+
+        if (excess>0)
         {
             float bulbPower = Mathf.Min(supply, 60);
-            bulb.intensity = bulbPower / 10f;
+            bulb.intensity = bulbPower;
         }
         else
         {
             bulb.intensity = 0;
         }
 
-        timeSinceSample += Time.instance.DeltaTime;
-
-        sampleInterval = 0.05f / (customer0.numCustomers>0?customer0.numCustomers:1);
-        plotter.VerticalMax = 1000 * (customer0.numCustomers > 0 ? customer0.numCustomers : 1);
-        plotter.VerticalGridStep = plotter.VerticalMax / 5;
-
-        if (timeSinceSample > sampleInterval)
-        {
-            prevSample = nextSample;
-            nextSample = Sample.Normal(customer0.TotalMean(Day.Monday, Mathf.Repeat(Time.instance.DayFraction + sampleInterval, 1f), 0), Mathf.Sqrt(customer0.TotalVariance(Day.Monday, Mathf.Repeat(Time.instance.DayFraction + sampleInterval, 1f), 0)), true);
-            timeSinceSample = 0;
-        }
-
-        demand = Mathf.Lerp(prevSample, nextSample, timeSinceSample / sampleInterval);
-
-        float excess = supply - demand;
-
         supplyText.text = "Supply: " + supply + "W";
         demandText.text = "Demand: " + demand + "W";
 
         excessText.text = "Surplus: " + excess + "W";
 
-        plotter.AddPoint("supply", 24f * Time.instance.DayFraction, supply);
-        plotter.AddPoint("demand", 24f * Time.instance.DayFraction, demand);
+        plotter.AddPoint("supply", displaytime, supply);
+        plotter.AddPoint("demand", displaytime, demand);
+
+        surplus.AddPoint("surplus", displaytime, excess);
     }
 
     public void TurnHandle()
@@ -108,5 +156,36 @@ public class GameManager : MonoBehaviour {
         {
             lightButtonText.text = "Light on";
         }
+    }
+
+    public void AddRandom()
+    {
+        customerDemand.AddCustomer(Random.Range(0, 7));
+    }
+
+    public void Add100()
+    {
+        for (int i = 0; i < 80; i++)
+        {
+            customerDemand.AddCustomer(0);
+        }
+        for (int i = 80; i < 98; i++)
+        {
+            customerDemand.AddCustomer(1);
+        }
+
+        customerDemand.AddCustomer(2);
+        customerDemand.AddCustomer(5);
+    }
+
+    public void AddSolar()
+    {
+        for (int i = 0; i < 10; i++ )
+            generators.Add(new Solar());
+    }
+
+    public void AddNuclear()
+    {
+        generators.Add(new nuclear());
     }
 }
