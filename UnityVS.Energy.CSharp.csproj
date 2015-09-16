@@ -71,6 +71,8 @@
     <Compile Include="Assets\ProPlotter\ExampleScene.cs" />
     <Compile Include="Assets\ProPlotter\ProPlotter.cs" />
     <Compile Include="Assets\Scripts\BuyPanel.cs" />
+    <Compile Include="Assets\Scripts\BuySellButton.cs" />
+    <Compile Include="Assets\Scripts\BuySellPanel.cs" />
     <Compile Include="Assets\Scripts\CsvFile.cs" />
     <Compile Include="Assets\Scripts\CustomerManager.cs" />
     <Compile Include="Assets\Scripts\EnergyProfile.cs" />

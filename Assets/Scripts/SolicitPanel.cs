@@ -3,52 +3,39 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SolicitPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class SolicitPanel : BuySellPanel
 {
-    bool mouseOver = false;
-
-    public GameObject BuySellPanel;
-    public Text number;
-    public new Text name;
-
     public int Id;
-    public string Name;
 
-    float moveTime = 0.1f;
-
-    void Update()
+    new void Update()
     {
-        if (mouseOver)
+        base.Update();
+
+        Number = CustomerManager.instance.numCustomers[Id];
+    }
+
+
+    public override bool CanBuy(int number)
+    {
+        return true;
+    }
+
+    public override bool CanSell(int number)
+    {
+        return CustomerManager.instance.numCustomers[Id] >= number;
+    }
+
+    public override void Buy(int number)
+    {
+        if (CanBuy(number))
         {
-            BuySellPanel.GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(BuySellPanel.GetComponent<RectTransform>().anchoredPosition, new Vector2(0, 75), UnityEngine.Time.deltaTime / moveTime);
+            CustomerManager.instance.numCustomers[Id] += number;
         }
-        else
-        {
-            BuySellPanel.GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(BuySellPanel.GetComponent<RectTransform>().anchoredPosition, new Vector2(0, 0), UnityEngine.Time.deltaTime / moveTime);
-        }
-
-        name.text = Name;
-        number.text = CustomerManager.instance.numCustomers[Id].ToString();
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public override void Sell(int number)
     {
-        mouseOver = true;
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        mouseOver = false;
-    }
-
-    public void Buy(int number)
-    {
-        CustomerManager.instance.numCustomers[Id] += number;
-    }
-
-    public void Sell(int number)
-    {
-        if(CustomerManager.instance.numCustomers[Id] >= number)
+        if(CanSell(number))
         {
             CustomerManager.instance.numCustomers[Id] -= number;
         }

@@ -7,8 +7,6 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance;
 
     public Rigidbody generatorHandle;
-    public Light bulb;
-
 
     public Text lightButtonText;
 
@@ -16,10 +14,10 @@ public class GameManager : MonoBehaviour {
     public float demand = 0.0f; // in W
     public float surplus;
 
-    bool lighton = false;
+    public ulong money = 0; // in £ 
 
     CustomerManager customerDemand;
-    List<Generator> generators = new List<Generator>();
+    public List<Generator> generators = new List<Generator>();
 
     float sampleInterval;
 
@@ -36,17 +34,6 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
-        supply = 3*Mathf.Abs(generatorHandle.angularVelocity.x);
-
-        if (lighton)
-        {
-            demand = 60;
-        }
-        else
-        {
-            demand = 0;
-        }
-
         timeSinceSample += Time.instance.DeltaTime;
 
         sampleInterval = 0.05f / (customerDemand.TotalCustomers > 0 ? customerDemand.TotalCustomers : 1);
@@ -72,16 +59,6 @@ public class GameManager : MonoBehaviour {
         }
 
         surplus = supply - demand;
-
-        if (surplus>0)
-        {
-            float bulbPower = Mathf.Min(supply, 60);
-            bulb.intensity = bulbPower;
-        }
-        else
-        {
-            bulb.intensity = 0;
-        }
     }
 
     public void TurnHandle()

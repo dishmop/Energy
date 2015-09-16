@@ -11,6 +11,8 @@ public class Interface : MonoBehaviour {
     public ProPlotter plotter;
     public ProPlotter surplus;
 
+    public Text money;
+
 
     // set up the parts of teh game's interface that are more easily done centrally
 	void Start () {
@@ -65,5 +67,7 @@ public class Interface : MonoBehaviour {
         plotter.AddPoint("demand", displaytime, GameManager.instance.demand);
 
         surplus.AddPoint("surplus", displaytime, GameManager.instance.surplus);
+
+        money.text = "£" + GameManager.instance.money.ToString("#,0");
 	}
 }
