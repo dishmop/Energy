@@ -26,6 +26,19 @@ public class GameManager : MonoBehaviour {
 
     float timeSinceSample = float.PositiveInfinity;
 
+    enum PayLevel
+    {
+        none,
+        threeh,
+        sixh,
+        twelveh,
+        day
+    }
+
+    int dayssincepc = 0;
+
+    PayLevel pay = PayLevel.none;
+
     void Start()
     {
         instance = this;
@@ -55,15 +68,78 @@ public class GameManager : MonoBehaviour {
 
         foreach (var generator in generators)
         {
+            generator.Update();
             supply += generator.Output(Time.instance.DayFraction, Time.instance.CurrentSeason);
         }
 
+        supply += 40*generatorHandle.angularVelocity.magnitude;
+
         surplus = supply - demand;
+
+        switch (pay)
+        {
+            case PayLevel.none:
+                if (Time.instance.HoursSincePowerCut >= 3)
+                {
+                    pay = PayLevel.threeh;
+                    Pay(1);
+                }
+                break;
+            case PayLevel.threeh:
+                if (Time.instance.HoursSincePowerCut >= 6)
+                {
+                    pay = PayLevel.sixh;
+                    Pay(3);
+                }
+                break;
+            case PayLevel.sixh:
+                if (Time.instance.HoursSincePowerCut >= 12)
+                {
+                    pay = PayLevel.twelveh;
+                    Pay(7);
+                }
+                break;
+            case PayLevel.twelveh:
+                if (Time.instance.DaysSincePowerCut >= 1)
+                {
+                    pay = PayLevel.day;
+                    Pay(15);
+                }
+                break;
+            case PayLevel.day:
+                while (Time.instance.DaysSincePowerCut > dayssincepc)
+                {
+                    dayssincepc++;
+                    Pay(25+dayssincepc);
+                }
+                break;
+        }
+
+        dayssincepc = Time.instance.DaysSincePowerCut;
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TurnHandle();
+        }
+
+        if(surplus<0)
+        {
+            Time.instance.PowerCut();
+            pay = PayLevel.none;
+        }
     }
 
     public void TurnHandle()
     {
         generatorHandle.maxAngularVelocity = 50;
         generatorHandle.AddTorque(new Vector3(1, 0, 0), ForceMode.Impulse);
+    }
+
+    void Pay(int multiplier)
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            money += (ulong)(multiplier*customerDemand.numCustomers[i]*CustomerManager.basepay[i]);
+        }
     }
 }

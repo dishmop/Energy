@@ -31,8 +31,6 @@ public class Time : MonoBehaviour {
 
     public float secondsPerDay = 30;
 
-    public Text timeText;
-
     int years = 0;
     public int Years
     {
@@ -109,6 +107,22 @@ public class Time : MonoBehaviour {
         get { return (int)((DayFraction - Hours / 24f) * 24f * 60f); }
     }
 
+
+    public int DaysSincePowerCut
+    {
+        get { return (int)timeSincePowerCut; }
+    }
+
+    public int HoursSincePowerCut
+    {
+        get { return (int)(24 * (timeSincePowerCut - DaysSincePowerCut)); }
+    }
+
+    public int MinutesSincePowerCut
+    {
+        get { return (int)(24 * 60f* (timeSincePowerCut - DaysSincePowerCut - HoursSincePowerCut/24f)); }
+    }
+
     float deltaTime;
     public float DeltaTime
     {
@@ -159,10 +173,24 @@ public class Time : MonoBehaviour {
 
     public static readonly int[] DaysInMonth = { 31, 28, 31, 30, 31, 39, 31, 31, 30, 31, 30, 31 };
     public static readonly string[] MonthName = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
-	
+
+    float timeSincePowerCut=0;
+
+    bool hadPowerCut = false;
+
 	void Update () {
         deltaTime = UnityEngine.Time.deltaTime / secondsPerDay;
         time += deltaTime;
+
+        timeSincePowerCut += deltaTime;
+
+        UnityEngine.Time.timeScale = 30.0f / secondsPerDay;
+
+        if (hadPowerCut)
+        {
+            hadPowerCut = false;
+            timeSincePowerCut = 0f;
+        }
 
         while (time > 1.0f)
         {
@@ -177,7 +205,10 @@ public class Time : MonoBehaviour {
                 years++;
             }
         }
-
-        timeText.text = Hours.ToString("00")+":"+Minutes.ToString("00") + " " + WeekDay +" " + DayInMonth + " " + MonthName[Month-1] + " Year #" + Years;
 	}
+
+    public void PowerCut()
+    {
+        hadPowerCut = true;
+    }
 }

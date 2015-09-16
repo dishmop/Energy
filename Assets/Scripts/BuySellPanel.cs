@@ -15,6 +15,10 @@ public abstract class BuySellPanel : MonoBehaviour, IPointerEnterHandler, IPoint
 
     protected int Number;
 
+    public Sprite sprite;
+
+    public Image image;
+
     float moveTime = 0.1f;
 
     protected void Update()
@@ -30,6 +34,7 @@ public abstract class BuySellPanel : MonoBehaviour, IPointerEnterHandler, IPoint
 
         name.text = Name;
         number.text = ProPlotter.SIPrefix(Number,0);
+        image.sprite = sprite;
     }
 
     public void OnPointerEnter(PointerEventData eventData)

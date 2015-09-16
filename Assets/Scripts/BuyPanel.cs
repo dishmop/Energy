@@ -27,7 +27,7 @@ public class BuyPanel : BuySellPanel {
     new void Update()
     {
         Number = GameManager.instance.generators.FindAll(delegate(Generator gen) { return gen.GetType() == type; }).Count;
-        cost.text = "£" + Cost;
+        cost.text = Utilities.MoneyToString((ulong)Cost);
         base.Update();
     }
 

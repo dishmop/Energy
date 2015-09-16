@@ -8,6 +8,9 @@ public class Interface : MonoBehaviour {
     public Text demandText;
     public Text excessText;
 
+    public Text timeText;
+    public Text powerCutText;
+
     public ProPlotter plotter;
     public ProPlotter surplus;
 
@@ -19,13 +22,13 @@ public class Interface : MonoBehaviour {
         plotter.NewPlot("supply", Color.green);
         plotter.NewPlot("demand", Color.red);
 
-        surplus.NewPlot("surplus", Color.blue);
+        //surplus.NewPlot("surplus", Color.blue);
 	}
 
     bool weekview = false;
 	void Update () {
         plotter.VerticalGridStep = plotter.VerticalMax / 5;
-        surplus.VerticalGridStep = surplus.VerticalRange / 5;
+        //surplus.VerticalGridStep = surplus.VerticalRange / 5;
 
         float displaytime;
 
@@ -45,9 +48,9 @@ public class Interface : MonoBehaviour {
                 plotter.HorizontalRange = 7;
                 plotter.ClearAll();
 
-                surplus.HorizontalGridStep = 1;
-                surplus.HorizontalRange = 7;
-                surplus.ClearAll();
+                //surplus.HorizontalGridStep = 1;
+                //surplus.HorizontalRange = 7;
+                //surplus.ClearAll();
 
                 weekview = true;
             }
@@ -58,16 +61,45 @@ public class Interface : MonoBehaviour {
         }
 
 
-        supplyText.text = "Supply: " + GameManager.instance.supply + "W";
-        demandText.text = "Demand: " + GameManager.instance.demand + "W";
+        supplyText.text = "Supply: " + ProPlotter.SIPrefix(GameManager.instance.supply) + "W";
+        demandText.text = "Demand: " + ProPlotter.SIPrefix(GameManager.instance.demand) + "W";
 
-        excessText.text = "Surplus: " + GameManager.instance.surplus + "W";
+        excessText.text = "Surplus: " + ProPlotter.SIPrefix(GameManager.instance.surplus) + "W";
+
+        if (GameManager.instance.surplus > 0)
+        {
+            excessText.color = Color.green;
+        } else
+        {
+            excessText.color = Color.red;
+        }
 
         plotter.AddPoint("supply", displaytime, GameManager.instance.supply);
         plotter.AddPoint("demand", displaytime, GameManager.instance.demand);
 
-        surplus.AddPoint("surplus", displaytime, GameManager.instance.surplus);
+        //surplus.AddPoint("surplus", displaytime, GameManager.instance.surplus);
 
         money.text = "£" + GameManager.instance.money.ToString("#,0");
-	}
+
+        timeText.text = Time.instance.Hours.ToString("00") + ":" + Time.instance.Minutes.ToString("00") + " " + Time.instance.WeekDay + " " + Time.instance.DayInMonth + " " + Time.MonthName[Time.instance.Month - 1] + " Year #" + Time.instance.Years;
+
+
+        string powercuttime = Time.instance.MinutesSincePowerCut+" minutes.";
+
+        if (Time.instance.HoursSincePowerCut == 1)
+        {
+            powercuttime = "1 hour and " + powercuttime;
+        }else 
+        if (Time.instance.HoursSincePowerCut>1)
+        {
+            powercuttime = Time.instance.HoursSincePowerCut + " hours and " + powercuttime;
+        }
+
+        if(Time.instance.DaysSincePowerCut>0)
+        {
+            powercuttime = Time.instance.DaysSincePowerCut + " days, " + powercuttime;
+        }
+
+        powerCutText.text = "Time since power cut: " + powercuttime;
+    }
 }

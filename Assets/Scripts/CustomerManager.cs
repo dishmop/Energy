@@ -4,6 +4,8 @@
     public int[] numCustomers = new int[8];
     EnergyProfile[,] profile = new EnergyProfile[8, 15];
 
+    public static readonly int[] basepay = { 3, 2, 5, 10, 20, 40, 80, 160 };
+
     public int TotalCustomers
     {
         get
@@ -52,7 +54,7 @@
 
     float standardDeviation(Day day, Season season, float time, float winter, int profile )
     {
-        return 30f;
+        return 100f;
     }
 
     public float TotalMean(Day day, Season season, float time, float winter)
@@ -75,11 +77,5 @@
         }
 
         return meantotal;
-    }
-
-    [System.Obsolete]
-    public void AddCustomer(int profileNum)
-    {
-        numCustomers[profileNum]++;
     }
 }
