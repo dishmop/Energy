@@ -13,6 +13,9 @@ public abstract class BuySellPanel : MonoBehaviour, IPointerEnterHandler, IPoint
 
     public string Name;
 
+    [TextArea(3, 10)]
+    public string Description;
+
     protected int Number;
 
     public Sprite sprite;
@@ -40,11 +43,13 @@ public abstract class BuySellPanel : MonoBehaviour, IPointerEnterHandler, IPoint
     public void OnPointerEnter(PointerEventData eventData)
     {
         mouseOver = true;
+        ToolTip.instance.ToolTipOn(Description, gameObject);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         mouseOver = false;
+        ToolTip.instance.ToolTipOff(gameObject);
     }
 
     public abstract bool CanBuy(int number);

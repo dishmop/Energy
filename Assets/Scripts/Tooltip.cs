@@ -9,6 +9,8 @@ public class ToolTip : MonoBehaviour
     public Text textField;
     public GameObject panel;
 
+    float maxwidth = 180;
+
     void Start()
     {
         instance = this;
@@ -18,15 +20,21 @@ public class ToolTip : MonoBehaviour
     {
         if (fromCurrent != null)
         {
-            textField.text = "  " + text;
+            textField.text = text;
             panel.SetActive(true);
 
             Vector2 extents = textField.rectTransform.rect.size;
             var settings = textField.GetGenerationSettings(extents);
 
             float length = textField.cachedTextGenerator.GetPreferredWidth(text, settings) + 17;
+            if (length > maxwidth)
+            {
+                length = maxwidth;
+            }
 
-            GetComponent<RectTransform>().sizeDelta = new Vector2(length, GetComponent<RectTransform>().sizeDelta.y);
+            float height = textField.cachedTextGenerator.GetPreferredHeight(text, settings) + 10;
+
+            GetComponent<RectTransform>().sizeDelta = new Vector2(length, height);
         }
         else
         {
@@ -35,6 +43,16 @@ public class ToolTip : MonoBehaviour
 
         Vector2 mousePos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         GetComponent<RectTransform>().anchoredPosition = new Vector3(mousePos.x + 2, mousePos.y + 2, 0);
+
+        if (GetComponent<RectTransform>().anchoredPosition.x+GetComponent<RectTransform>().sizeDelta.x > ((RectTransform)transform.parent).sizeDelta.x)
+        {
+            GetComponent<RectTransform>().anchoredPosition -= new Vector2(maxwidth+10,0);
+        }
+
+        if (GetComponent<RectTransform>().anchoredPosition.y + GetComponent<RectTransform>().sizeDelta.y > ((RectTransform)transform.parent).sizeDelta.y)
+        {
+            GetComponent<RectTransform>().anchoredPosition -= new Vector2(0,GetComponent<RectTransform>().sizeDelta.y + 20);
+        }
     }
 
     GameObject fromCurrent;

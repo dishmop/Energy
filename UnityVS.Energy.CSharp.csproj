@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.1.0f3</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -77,17 +79,19 @@
     <Compile Include="Assets\Scripts\CustomerManager.cs" />
     <Compile Include="Assets\Scripts\EnergyProfile.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\Generators\Diesel.cs" />
+    <Compile Include="Assets\Scripts\Generators\DieselGen.cs" />
     <Compile Include="Assets\Scripts\Generators\Generator.cs" />
+    <Compile Include="Assets\Scripts\Generators\Petrol.cs" />
     <Compile Include="Assets\Scripts\Generators\Solar.cs" />
     <Compile Include="Assets\Scripts\Generators\nuclear.cs" />
     <Compile Include="Assets\Scripts\Interface.cs" />
     <Compile Include="Assets\Scripts\ResearchPanel.cs" />
     <Compile Include="Assets\Scripts\Researchable.cs" />
     <Compile Include="Assets\Scripts\Sample.cs" />
+    <Compile Include="Assets\Scripts\ShowToolTip.cs" />
     <Compile Include="Assets\Scripts\SolicitPanel.cs" />
     <Compile Include="Assets\Scripts\Time.cs" />
-    <Compile Include="Assets\Scripts\Tooltip.cs" />
+    <Compile Include="Assets\Scripts\ToolTip.cs" />
     <Compile Include="Assets\Scripts\Utilities.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />

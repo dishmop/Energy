@@ -26,7 +26,7 @@ public class Time : MonoBehaviour {
 
     public static Time instance;
 
-    int days;
+    int days = 190;
     float time;
 
     public float secondsPerDay = 30;

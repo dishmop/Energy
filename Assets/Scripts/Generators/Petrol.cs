@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Diesel : Generator
+public class Petrol : Generator
 {
     public override float Output(float time, Season season)
     {
