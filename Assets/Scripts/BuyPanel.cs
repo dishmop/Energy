@@ -45,6 +45,7 @@ public class BuyPanel : BuySellPanel {
     {
         if (CanBuy(number))
         {
+            AudioSource.PlayClipAtPoint(Globals.instance.clicklow,transform.position);
             for (int i = 0; i < number; i++)
             {
                 GameManager.instance.generators.Add((Generator)System.Activator.CreateInstance(type));
@@ -57,6 +58,7 @@ public class BuyPanel : BuySellPanel {
     {
         if (CanSell(number))
         {
+            AudioSource.PlayClipAtPoint(Globals.instance.clicklow, transform.position);
             for (int i = 0; i < number; i++)
             {
                 int index = GameManager.instance.generators.FindLastIndex(delegate(Generator gen) { return gen.GetType() == type; });

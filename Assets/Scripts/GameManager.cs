@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour {
         customerDemand = new CustomerManager();
     }
 
+    Queue<float> handGenAngVel = new Queue<float>();
+
     void Update()
     {
         timeSinceSample += Time.instance.DeltaTime;
@@ -72,7 +74,19 @@ public class GameManager : MonoBehaviour {
             supply += generator.Output(Time.instance.DayFraction, Time.instance.CurrentSeason);
         }
 
-        supply += 40*generatorHandle.angularVelocity.magnitude;
+        handGenAngVel.Enqueue(generatorHandle.angularVelocity.magnitude);
+
+        while(handGenAngVel.Count>16){
+            handGenAngVel.Dequeue();
+        }
+
+        float handgensupply = 0;
+
+        foreach(float angvel in handGenAngVel){
+            handgensupply += angvel;
+        }
+
+        supply += (40 * handgensupply) / handGenAngVel.Count;
 
         surplus = supply - demand;
 
@@ -81,29 +95,26 @@ public class GameManager : MonoBehaviour {
             case PayLevel.none:
                 if (Time.instance.HoursSincePowerCut >= 3)
                 {
-                    pay = PayLevel.threeh;
-                    Pay(1);
+                    if(Pay(1)) pay = PayLevel.threeh;
+                    
                 }
                 break;
             case PayLevel.threeh:
                 if (Time.instance.HoursSincePowerCut >= 6)
                 {
-                    pay = PayLevel.sixh;
-                    Pay(3);
+                    if (Pay(3)) pay = PayLevel.sixh;
                 }
                 break;
             case PayLevel.sixh:
                 if (Time.instance.HoursSincePowerCut >= 12)
                 {
-                    pay = PayLevel.twelveh;
-                    Pay(7);
+                    if (Pay(7)) pay = PayLevel.twelveh;
                 }
                 break;
             case PayLevel.twelveh:
                 if (Time.instance.DaysSincePowerCut >= 1)
                 {
-                    pay = PayLevel.day;
-                    Pay(15);
+                    if (Pay(15)) pay = PayLevel.day;
                 }
                 break;
             case PayLevel.day:
@@ -122,7 +133,7 @@ public class GameManager : MonoBehaviour {
             TurnHandle();
         }
 
-        if(surplus<0)
+        if(surplus<0 || customerDemand.TotalCustomers<=0)
         {
             Time.instance.PowerCut();
             pay = PayLevel.none;
@@ -135,11 +146,19 @@ public class GameManager : MonoBehaviour {
         generatorHandle.AddTorque(new Vector3(1, 0, 0), ForceMode.Impulse);
     }
 
-    void Pay(int multiplier)
+    bool Pay(int multiplier)
     {
+        ulong moneyold = money;
         for (int i = 0; i < 8; i++)
         {
             money += (ulong)(multiplier*customerDemand.numCustomers[i]*CustomerManager.basepay[i]);
         }
+
+        if (moneyold != money)
+        {
+            AudioSource.PlayClipAtPoint(Globals.instance.coin, transform.position);
+            return true;
+        }
+        return false;
     }
 }

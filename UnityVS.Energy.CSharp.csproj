@@ -84,9 +84,12 @@
     <Compile Include="Assets\Scripts\Generators\Petrol.cs" />
     <Compile Include="Assets\Scripts\Generators\Solar.cs" />
     <Compile Include="Assets\Scripts\Generators\nuclear.cs" />
+    <Compile Include="Assets\Scripts\Globals.cs" />
     <Compile Include="Assets\Scripts\Interface.cs" />
     <Compile Include="Assets\Scripts\ResearchPanel.cs" />
-    <Compile Include="Assets\Scripts\Researchable.cs" />
+    <Compile Include="Assets\Scripts\Researchables\Music.cs" />
+    <Compile Include="Assets\Scripts\Researchables\Researchable.cs" />
+    <Compile Include="Assets\Scripts\Researchables\TimeBoost.cs" />
     <Compile Include="Assets\Scripts\Sample.cs" />
     <Compile Include="Assets\Scripts\ShowToolTip.cs" />
     <Compile Include="Assets\Scripts\SolicitPanel.cs" />

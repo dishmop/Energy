@@ -9,9 +9,7 @@ public abstract class BuySellPanel : MonoBehaviour, IPointerEnterHandler, IPoint
     public GameObject childpanel;
 
     public Text number;
-    public new Text name;
-
-    public string Name;
+    public Text Name;
 
     [TextArea(3, 10)]
     public string Description;
@@ -35,7 +33,7 @@ public abstract class BuySellPanel : MonoBehaviour, IPointerEnterHandler, IPoint
             childpanel.GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(childpanel.GetComponent<RectTransform>().anchoredPosition, new Vector2(0, 0), UnityEngine.Time.deltaTime / moveTime);
         }
 
-        name.text = Name;
+        Name.text = name;
         number.text = ProPlotter.SIPrefix(Number,0);
         image.sprite = sprite;
     }
@@ -44,6 +42,7 @@ public abstract class BuySellPanel : MonoBehaviour, IPointerEnterHandler, IPoint
     {
         mouseOver = true;
         ToolTip.instance.ToolTipOn(Description, gameObject);
+        childpanel.GetComponent<AudioSource>().Play();
     }
 
     public void OnPointerExit(PointerEventData eventData)

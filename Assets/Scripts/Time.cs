@@ -15,11 +15,11 @@ public enum Day
 
 public enum Season
 {
-    Autumn,
-    HighSummer,
-    Summer,
-    Spring,
-    Winter
+    Autumn = 0,
+    HighSummer = 1,
+    Summer = 2,
+    Spring = 3,
+    Winter = 4
 }
 
 public class Time : MonoBehaviour {
@@ -84,7 +84,7 @@ public class Time : MonoBehaviour {
                         break;
                 }
 
-                seasontoday = (Season)(((int)seasontoday + Mathf.RoundToInt(Random.Range(-0.7f, 0.7f)))%5);
+                seasontoday = (Season)(((((int)seasontoday + Mathf.RoundToInt(Random.Range(-0.7f, 0.7f)))%5)+5)%5);
             }
 
             return seasontoday;

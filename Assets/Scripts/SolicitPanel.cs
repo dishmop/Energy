@@ -29,6 +29,7 @@ public class SolicitPanel : BuySellPanel
     {
         if (CanBuy(number))
         {
+            AudioSource.PlayClipAtPoint(Globals.instance.clicklow, transform.position);
             CustomerManager.instance.numCustomers[Id] += number;
         }
     }
@@ -37,6 +38,7 @@ public class SolicitPanel : BuySellPanel
     {
         if(CanSell(number))
         {
+            AudioSource.PlayClipAtPoint(Globals.instance.clicklow, transform.position);
             CustomerManager.instance.numCustomers[Id] -= number;
         }
     }

@@ -32,8 +32,8 @@ public class Interface : MonoBehaviour {
 
         float displaytime;
 
-        // when a game day is less than 3 seconds, switch to week view
-        if (Time.instance.secondsPerDay <= 3f)
+        // when a game day is less than 5 seconds, switch to week view
+        if (Time.instance.secondsPerDay <= 5f)
         {
             displaytime = (int)Time.instance.WeekDay + Time.instance.DayFraction;
 
@@ -69,9 +69,14 @@ public class Interface : MonoBehaviour {
         if (GameManager.instance.surplus > 0)
         {
             excessText.color = Color.green;
+
+            GetComponent<AudioSource>().pitch = Mathf.Lerp(GetComponent<AudioSource>().pitch, 1, 10f*UnityEngine.Time.deltaTime);
         } else
         {
             excessText.color = Color.red;
+
+            GetComponent<AudioSource>().pitch = Mathf.Lerp(GetComponent<AudioSource>().pitch, 0, 10f * UnityEngine.Time.deltaTime);
+            
         }
 
         plotter.AddPoint("supply", displaytime, GameManager.instance.supply);
