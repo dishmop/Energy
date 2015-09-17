@@ -156,7 +156,9 @@ public class GameManager : MonoBehaviour {
 
         if (moneyold != money)
         {
-            AudioSource.PlayClipAtPoint(Globals.instance.coin, transform.position);
+
+            if(Time.instance.secondsPerDay >=5f)
+                AudioSource.PlayClipAtPoint(Globals.instance.coin, transform.position);
             return true;
         }
         return false;

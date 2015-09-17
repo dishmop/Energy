@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SolicitPanel : BuySellPanel
+public class CustomerPanel : BuySellPanel
 {
     public int Id;
 

@@ -20,6 +20,9 @@ public class ResearchPanel : MonoBehaviour, IPointerExitHandler, IPointerEnterHa
 
     public Button buyButton;
 
+    public GameObject custPanel;
+    public GameObject genPanel;
+
     void Start()
     {
         rt = GetComponent<RectTransform>();
@@ -38,13 +41,22 @@ public class ResearchPanel : MonoBehaviour, IPointerExitHandler, IPointerEnterHa
 
         if (current != null)
         {
-            nametext.text = current.Name;
-            costtext.text = Utilities.MoneyToString((ulong)current.cost);
+            nametext.text = current.name;
+            
             descriptiontext.text = current.LongDescription;
 
             buyButton.gameObject.SetActive(true);
 
-            buyButton.interactable = current.CanBuy();
+            if (current.researched)
+            {
+                costtext.text = "Already researched";
+                buyButton.interactable = false;
+            }
+            else
+            {
+                costtext.text = Utilities.MoneyToString((ulong)current.cost);
+                buyButton.interactable = current.CanBuy();
+            }
         }
         else
         {
@@ -74,5 +86,34 @@ public class ResearchPanel : MonoBehaviour, IPointerExitHandler, IPointerEnterHa
         {
             current.Buy();
         }
+    }
+
+    public void AddCustomer(string name, int id, string description, Sprite image)
+    {
+        var panel = (GameObject)Instantiate(Globals.instance.custPrefab);
+        panel.transform.SetParent(custPanel.transform, false);
+
+        panel.name = name;
+
+        var cust = panel.GetComponent<CustomerPanel>();
+
+        cust.Description = description;
+        cust.Id = id;
+        cust.sprite = image;
+    }
+
+    public void AddGenerator(string name, int cost, string type, string description, Sprite image)
+    {
+        var panel = (GameObject)Instantiate(Globals.instance.genPrefab);
+        panel.transform.SetParent(genPanel.transform, false);
+
+        panel.name = name;
+
+        var cust = panel.GetComponent<GeneratorPanel>();
+
+        cust.Description = description;
+        cust.Cost = cost;
+        cust.Type = type;
+        cust.sprite = image;
     }
 }

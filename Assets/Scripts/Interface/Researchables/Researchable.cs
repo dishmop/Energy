@@ -4,11 +4,17 @@ using UnityEngine.EventSystems;
 public abstract class Researchable : MonoBehaviour, IPointerDownHandler {
     public int cost;
 
-    public string Name;
+    public Sprite sprite;
 
-    void Start()
+    [System.NonSerialized]
+    public bool researched = false;
+
+    public UnityEngine.UI.Image icon;
+
+    protected void Start()
     {
-        GetComponentInChildren<UnityEngine.UI.Text>().text = Name;
+        icon.sprite = sprite;
+        GetComponentInChildren<UnityEngine.UI.Text>().text = name;
     }
 
     [TextArea(3,10)]
@@ -23,6 +29,7 @@ public abstract class Researchable : MonoBehaviour, IPointerDownHandler {
     {
         if (CanBuy())
         {
+            researched = true;
             AudioSource.PlayClipAtPoint(Globals.instance.clickhigh, transform.position);
             GameManager.instance.money -= (ulong)cost;
             OnResarch();

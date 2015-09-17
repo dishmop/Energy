@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.1.0f3</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -72,30 +70,36 @@
   <ItemGroup>
     <Compile Include="Assets\ProPlotter\ExampleScene.cs" />
     <Compile Include="Assets\ProPlotter\ProPlotter.cs" />
-    <Compile Include="Assets\Scripts\BuyPanel.cs" />
-    <Compile Include="Assets\Scripts\BuySellButton.cs" />
-    <Compile Include="Assets\Scripts\BuySellPanel.cs" />
-    <Compile Include="Assets\Scripts\CsvFile.cs" />
-    <Compile Include="Assets\Scripts\CustomerManager.cs" />
-    <Compile Include="Assets\Scripts\EnergyProfile.cs" />
-    <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\Generators\DieselGen.cs" />
-    <Compile Include="Assets\Scripts\Generators\Generator.cs" />
-    <Compile Include="Assets\Scripts\Generators\Petrol.cs" />
-    <Compile Include="Assets\Scripts\Generators\Solar.cs" />
-    <Compile Include="Assets\Scripts\Generators\nuclear.cs" />
-    <Compile Include="Assets\Scripts\Globals.cs" />
-    <Compile Include="Assets\Scripts\Interface.cs" />
-    <Compile Include="Assets\Scripts\ResearchPanel.cs" />
-    <Compile Include="Assets\Scripts\Researchables\Music.cs" />
-    <Compile Include="Assets\Scripts\Researchables\Researchable.cs" />
-    <Compile Include="Assets\Scripts\Researchables\TimeBoost.cs" />
-    <Compile Include="Assets\Scripts\Sample.cs" />
-    <Compile Include="Assets\Scripts\ShowToolTip.cs" />
-    <Compile Include="Assets\Scripts\SolicitPanel.cs" />
-    <Compile Include="Assets\Scripts\Time.cs" />
-    <Compile Include="Assets\Scripts\ToolTip.cs" />
-    <Compile Include="Assets\Scripts\Utilities.cs" />
+    <Compile Include="Assets\Scripts\Game\CustomerManager.cs" />
+    <Compile Include="Assets\Scripts\Game\EnergyProfile.cs" />
+    <Compile Include="Assets\Scripts\Game\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Game\Generators\DieselGen.cs" />
+    <Compile Include="Assets\Scripts\Game\Generators\Generator.cs" />
+    <Compile Include="Assets\Scripts\Game\Generators\Petrol.cs" />
+    <Compile Include="Assets\Scripts\Game\Generators\Solar.cs" />
+    <Compile Include="Assets\Scripts\Game\Generators\coal.cs" />
+    <Compile Include="Assets\Scripts\Game\Generators\nuclear.cs" />
+    <Compile Include="Assets\Scripts\Game\Time.cs" />
+    <Compile Include="Assets\Scripts\Interface\BuySellButton.cs" />
+    <Compile Include="Assets\Scripts\Interface\BuySellPanel.cs" />
+    <Compile Include="Assets\Scripts\Interface\CustomerPanel.cs" />
+    <Compile Include="Assets\Scripts\Interface\GeneratorPanel.cs" />
+    <Compile Include="Assets\Scripts\Interface\Globals.cs" />
+    <Compile Include="Assets\Scripts\Interface\Interface.cs" />
+    <Compile Include="Assets\Scripts\Interface\ResearchPanel.cs" />
+    <Compile Include="Assets\Scripts\Interface\Researchables\CustomerResearchable.cs" />
+    <Compile Include="Assets\Scripts\Interface\Researchables\GeneratorResearchable.cs" />
+    <Compile Include="Assets\Scripts\Interface\Researchables\Music.cs" />
+    <Compile Include="Assets\Scripts\Interface\Researchables\Researchable.cs" />
+    <Compile Include="Assets\Scripts\Interface\Researchables\TimeBoost.cs" />
+    <Compile Include="Assets\Scripts\Interface\SortCustomers.cs" />
+    <Compile Include="Assets\Scripts\Interface\SortGenerators.cs" />
+    <Compile Include="Assets\Scripts\Interface\SortResearchables.cs" />
+    <Compile Include="Assets\Scripts\Utilities\CsvFile.cs" />
+    <Compile Include="Assets\Scripts\Utilities\Sample.cs" />
+    <Compile Include="Assets\Scripts\Utilities\ShowToolTip.cs" />
+    <Compile Include="Assets\Scripts\Utilities\ToolTip.cs" />
+    <Compile Include="Assets\Scripts\Utilities\Utilities.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
 </Project>

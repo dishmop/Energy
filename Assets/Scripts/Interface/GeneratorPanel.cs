@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class BuyPanel : BuySellPanel {
+public class GeneratorPanel : BuySellPanel {
 
     public int Cost;
 
@@ -12,12 +12,12 @@ public class BuyPanel : BuySellPanel {
 
     System.Type type;
 
-    void Awake()
+    void Start()
     {
         type = System.Type.GetType(Type);
         if (type==null)
         {
-            throw new System.Exception("Type not recognised");
+            throw new System.Exception("Type " + Type+ " not recognised");
         }
         else if(!type.IsSubclassOf(typeof(Generator))){
             throw new System.Exception("Type must be a subclass of Generator");

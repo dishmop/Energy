@@ -15,6 +15,10 @@ public class Globals : MonoBehaviour {
     public AudioClip hum;
 
     public AudioClip music;
+
+
+    public GameObject genPrefab;
+    public GameObject custPrefab;
     
     void Start () {
         instance = this;
