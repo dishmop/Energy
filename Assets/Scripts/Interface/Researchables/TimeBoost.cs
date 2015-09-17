@@ -3,8 +3,10 @@ using System.Collections;
 
 public class TimeBoost : Researchable {
 
+    public float spd;
+
     protected override void OnResarch()
     {
-        Time.instance.secondsPerDay /= 7f;
+        Time.instance.secondsPerDay = spd;
     }
 }
