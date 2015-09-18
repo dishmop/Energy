@@ -7,25 +7,25 @@ public class Petrol : Generator
         return 0;
     }
 
-    static float timesinceclick = 0;
-    static int num = 0;
+    float timesinceclick = 0;
+    
+    public static int number = 0;
 
-    public Petrol()
-    {
-        num++;
-    }
 
     float timebetweenclicks = 0.5f;
 
     public override void Update()
     {
         timesinceclick += UnityEngine.Time.deltaTime;
-        //GameManager.instance.generatorHandle.AddTorque(new Vector3(1f, 0, 0), ForceMode.Force);
 
-        while (timesinceclick >= timebetweenclicks/num)
+        if (on)
         {
-            GameManager.instance.TurnHandle();
-            timesinceclick -= timebetweenclicks/num;
+            while (timesinceclick >= timebetweenclicks)
+            {
+                GameManager.instance.TurnHandle();
+                timesinceclick -= timebetweenclicks;
+                GameManager.instance.totalCarbon += 700.0f;
+            }
         }
     }
 }

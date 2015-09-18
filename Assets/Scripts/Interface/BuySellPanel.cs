@@ -14,7 +14,7 @@ public abstract class BuySellPanel : MonoBehaviour, IPointerEnterHandler, IPoint
     [TextArea(3, 10)]
     public string Description;
 
-    protected int Number;
+    public int Number;
 
     public Sprite sprite;
 

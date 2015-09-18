@@ -8,6 +8,8 @@ public class Interface : MonoBehaviour {
     public Text demandText;
     public Text excessText;
 
+    public Text carbonText;
+
     public Text timeText;
     public Text powerCutText;
 
@@ -106,5 +108,7 @@ public class Interface : MonoBehaviour {
         }
 
         powerCutText.text = "Time since power cut: " + powercuttime;
+
+        carbonText.text = "Total greenhouse emissions: " + ProPlotter.SIPrefix(GameManager.instance.totalCarbon) + "g (equiv. as CO2)";
     }
 }

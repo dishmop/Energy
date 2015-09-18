@@ -1,6 +1,8 @@
 ﻿public class Solar : Generator {
     public float size = 1f; //in m^2
 
+    public static int number = 0;
+
     public override float Output(float time, Season season)
     {
         float seasonfactor = 0f;
@@ -27,6 +29,13 @@
 
         output = output > 0 ? output : 0;
 
-        return output*size;
+        if (on)
+        {
+            return output * size;
+        }
+        else
+        {
+            return 0;
+        }
     }
 }

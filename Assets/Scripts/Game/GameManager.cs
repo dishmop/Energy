@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour {
     public float demand = 0.0f; // in W
     public float surplus;
 
+    public float totalCarbon = 0.0f; // in g
+
     public ulong money = 0; // in £ 
 
     CustomerManager customerDemand;
@@ -70,7 +72,7 @@ public class GameManager : MonoBehaviour {
 
         foreach (var generator in generators)
         {
-            generator.Update();
+            generator.CallUpdate();
             supply += generator.Output(Time.instance.DayFraction, Time.instance.CurrentSeason);
         }
 

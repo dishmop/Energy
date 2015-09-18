@@ -14,6 +14,8 @@ public class GeneratorPanel : BuySellPanel {
 
     public GameObject mask;
 
+    public Slider activeSlider;
+
     void Start()
     {
         type = System.Type.GetType(Type);
@@ -36,6 +38,8 @@ public class GeneratorPanel : BuySellPanel {
         Name.text = name;
         number.text = ProPlotter.SIPrefix(Number, 0);
         image.sprite = sprite;
+
+        activeSlider.maxValue = Number;
 
         if (mouseOver)
         {
@@ -82,8 +86,14 @@ public class GeneratorPanel : BuySellPanel {
             AudioSource.PlayClipAtPoint(Globals.instance.clicklow,transform.position);
             for (int i = 0; i < number; i++)
             {
-                GameManager.instance.generators.Add((Generator)System.Activator.CreateInstance(type));
+                Generator newgen = (Generator)System.Activator.CreateInstance(type);
+                newgen.panel = this;
+                GameManager.instance.generators.Add(newgen);
                 GameManager.instance.money -= (ulong)Cost;
+
+                activeSlider.maxValue++;
+                activeSlider.value++;
+                Number++;
             }
         }
     }
