@@ -29,7 +29,7 @@ public struct EnergyProfile {
 
         List<string> columns = new List<string>();
 
-        using (var reader = new CsvFileReader("Assets\\profiles.csv"))
+        using (var reader = new CsvFileReader("profiles"))
         {
             int profileClassNum = 0;
             int rowNum = -1; // first line of each profile headings, so ignore that

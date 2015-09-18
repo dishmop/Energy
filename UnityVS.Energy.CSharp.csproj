@@ -87,6 +87,7 @@
     <Compile Include="Assets\Scripts\Interface\GeneratorPanel.cs" />
     <Compile Include="Assets\Scripts\Interface\Globals.cs" />
     <Compile Include="Assets\Scripts\Interface\Interface.cs" />
+    <Compile Include="Assets\Scripts\Interface\MainMenu.cs" />
     <Compile Include="Assets\Scripts\Interface\ResearchPanel.cs" />
     <Compile Include="Assets\Scripts\Interface\Researchables\CustomerResearchable.cs" />
     <Compile Include="Assets\Scripts\Interface\Researchables\GeneratorResearchable.cs" />
