@@ -16,6 +16,9 @@ public class Globals : MonoBehaviour {
 
     public AudioClip music;
 
+    public AudioSource musicPlayer;
+    public AudioSource clickPlayer;
+
 
     public GameObject genPrefab;
     public GameObject custPrefab;

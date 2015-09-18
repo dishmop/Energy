@@ -12,6 +12,8 @@ public class GeneratorPanel : BuySellPanel {
 
     System.Type type;
 
+    public GameObject mask;
+
     void Start()
     {
         type = System.Type.GetType(Type);
@@ -24,11 +26,43 @@ public class GeneratorPanel : BuySellPanel {
         }
     }
 
+    bool up;
+
     new void Update()
     {
         Number = GameManager.instance.generators.FindAll(delegate(Generator gen) { return gen.GetType() == type; }).Count;
         cost.text = Utilities.MoneyToString((ulong)Cost);
-        base.Update();
+
+        Name.text = name;
+        number.text = ProPlotter.SIPrefix(Number, 0);
+        image.sprite = sprite;
+
+        if (mouseOver)
+        {
+            //mask.GetComponent<RectTransform>().sizeDelta = Vector2.Lerp(mask.GetComponent<RectTransform>().sizeDelta, new Vector2(250, mask.GetComponent<RectTransform>().sizeDelta.y), UnityEngine.Time.deltaTime);
+            mask.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Mathf.Lerp(mask.GetComponent<RectTransform>().sizeDelta.x, 230, 5.0f*UnityEngine.Time.deltaTime));
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                up = true;
+            }
+        }
+        else
+        {
+            up = false;
+            mask.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Mathf.Lerp(mask.GetComponent<RectTransform>().sizeDelta.x, 200, 5.0f * UnityEngine.Time.deltaTime));
+        }
+
+        if (up)
+        {
+            childpanel.GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(childpanel.GetComponent<RectTransform>().anchoredPosition, new Vector2(0, 75), UnityEngine.Time.deltaTime / moveTime);
+        }
+        else
+        {
+            childpanel.GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(childpanel.GetComponent<RectTransform>().anchoredPosition, new Vector2(0, 0), UnityEngine.Time.deltaTime / moveTime);
+        }
+
+        //base.Update();
     }
 
     public override bool CanBuy(int number)

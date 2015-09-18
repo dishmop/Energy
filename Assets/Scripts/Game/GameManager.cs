@@ -144,6 +144,10 @@ public class GameManager : MonoBehaviour {
     {
         generatorHandle.maxAngularVelocity = 50;
         generatorHandle.AddTorque(new Vector3(1, 0, 0), ForceMode.Impulse);
+        if (Time.instance.secondsPerDay > 15.0f)
+        {
+            Globals.instance.clickPlayer.Play();
+        }
     }
 
     bool Pay(int multiplier)

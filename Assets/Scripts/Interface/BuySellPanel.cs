@@ -20,7 +20,7 @@ public abstract class BuySellPanel : MonoBehaviour, IPointerEnterHandler, IPoint
 
     public Image image;
 
-    float moveTime = 0.1f;
+    protected float moveTime = 0.1f;
 
     protected void Update()
     {
