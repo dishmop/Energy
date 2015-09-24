@@ -19,15 +19,17 @@ public class battery : Generator
         if (on)
         {
             float targetoutput; // in W
-            if (GameManager.instance.surplus - buffer < 0.0f)
+            float diff = GameManager.instance.surplus - panel.Number * panel.activeSlider.value;
+
+            if (diff < 0.0f)
             {
-                targetoutput = Mathf.Min(buffer - GameManager.instance.surplus, maxoutput);
+                targetoutput = Mathf.Min(-diff, maxoutput);
 
                 targetoutput = Mathf.Min((1000.0f * charge) / (Time.instance.DeltaTime * 24.0f), targetoutput);
             }
             else
             {
-                targetoutput = Mathf.Min(maxinput, GameManager.instance.surplus - buffer);
+                targetoutput = Mathf.Min(maxinput, diff);
 
                 targetoutput = -Mathf.Min(targetoutput, (1000.0f * (maxcharge - charge)) / (Time.instance.DeltaTime * 24.0f));
             }
