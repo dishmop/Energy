@@ -102,7 +102,7 @@ public class ResearchPanel : MonoBehaviour, IPointerExitHandler, IPointerEnterHa
         cust.sprite = image;
     }
 
-    public void AddGenerator(string name, int cost, string type, string description, Sprite image)
+    public void AddGenerator(string name, int cost, int saleCost, string type, string description, Sprite image)
     {
         var panel = (GameObject)Instantiate(Globals.instance.genPrefab);
         panel.transform.SetParent(genPanel.transform, false);
@@ -113,6 +113,7 @@ public class ResearchPanel : MonoBehaviour, IPointerExitHandler, IPointerEnterHa
 
         cust.Description = description;
         cust.Cost = cost;
+        cust.SellCost = saleCost;
         cust.Type = type;
         cust.sprite = image;
     }

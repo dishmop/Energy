@@ -19,7 +19,7 @@ public class battery : Generator
         if (on)
         {
             float targetoutput; // in W
-            float diff = GameManager.instance.surplus - panel.Number * panel.activeSlider.value;
+            float diff = (GameManager.instance.surplus - buffer * panel.activeSlider.value) / panel.activeSlider.value;
 
             if (diff < 0.0f)
             {

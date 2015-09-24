@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class GeneratorPanel : BuySellPanel {
 
     public int Cost;
+    public int SellCost;
 
     public Text cost;
 
@@ -107,6 +108,7 @@ public class GeneratorPanel : BuySellPanel {
             {
                 int index = GameManager.instance.generators.FindLastIndex(delegate(Generator gen) { return gen.GetType() == type; });
                 GameManager.instance.generators.RemoveAt(index);
+                GameManager.instance.money += (ulong)SellCost;
             }
         }
     }
