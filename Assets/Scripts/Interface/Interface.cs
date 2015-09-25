@@ -45,7 +45,7 @@ public class Interface : MonoBehaviour {
 
                 plotter.HorizontalGridStep = 1;
 
-                plotter.HorizontalLabels = System.Enum.GetNames(typeof(Day));
+                plotter.HorizontalLabels = new string[7] {"Mon","Tues","Wed","Thurs","Fri","Sat","Sun"};
 
                 plotter.HorizontalRange = 7;
                 plotter.ClearAll();
