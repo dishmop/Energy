@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour {
     public float demand = 0.0f; // in W
     public float surplus;
 
+    public Dictionary<System.Type, float> supplyByType = new Dictionary<System.Type, float>();
+
     public float totalCarbon = 0.0f; // in g
 
     public ulong money = 0; // in £ 
@@ -70,10 +72,27 @@ public class GameManager : MonoBehaviour {
 
         supply = 0;
 
+        var types = new List<System.Type>(supplyByType.Keys);
+        foreach (var type in types)
+        {
+            supplyByType[type] = 0f;
+        }
+
         foreach (var generator in generators)
         {
             generator.CallUpdate();
-            supply += generator.Output(Time.instance.DayFraction, Time.instance.CurrentSeason);
+            float supp = generator.Output(Time.instance.DayFraction, Time.instance.CurrentSeason);
+
+            if (supplyByType.ContainsKey(generator.GetType()))
+            {
+                supplyByType[generator.GetType()] += supp;
+            }
+            else
+            {
+                supplyByType.Add(generator.GetType(), supp);
+            }
+
+            supply += supp;
         }
 
         handGenAngVel.Enqueue(generatorHandle.angularVelocity.magnitude);

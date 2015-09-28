@@ -127,7 +127,8 @@ public class ProPlotter : MonoBehaviour {
     /// </summary>
     public string[] VerticalLabels = null;
 
-
+    // TODO: comment
+    public bool fill = true;
 
 
     public float VerticalRange
@@ -152,7 +153,7 @@ public class ProPlotter : MonoBehaviour {
 
 
     private RawImage image; // the rawimage component we draw to
-    private Texture2D texture; // the texture we actually draw to
+    private RenderTexture texture; // the texture we actually draw to
 
     private bool needsUpdate; // have we added points
 
@@ -184,7 +185,9 @@ public class ProPlotter : MonoBehaviour {
             VerticalMaxMin = VerticalMax;
         }
 
-        texture = new Texture2D(WidthInTexels, HeightInTexels);
+        texture = new RenderTexture(WidthInTexels, HeightInTexels, 0);
+
+        texture.antiAliasing = 8;
 
         image.texture = texture;
         
@@ -208,19 +211,21 @@ public class ProPlotter : MonoBehaviour {
                 VerticalMax = VerticalMaxMin;
             }
 
+
             foreach (var plot in plots)
             {
                 plot.Value.Trim();
             }
 
 
-
-            var rt = RenderTexture.GetTemporary(WidthInTexels, HeightInTexels);
-            RenderTexture.active = rt;
+            RenderTexture.active = texture;
             GL.PushMatrix();
             lineMat.SetPass(0);
             GL.LoadOrtho();
             GL.Clear(false, true, BackgroundColour);
+
+
+
 
             if (AllowOverwrite)
             {
@@ -394,22 +399,25 @@ public class ProPlotter : MonoBehaviour {
                 float y = -VerticalMin / VerticalRange;
                 DrawLine(0f, y, 1f, y, Color.black);
             }
-            
+
+
+            if (fill)
+            {
+                GL.End();
+                GL.Begin(GL.QUADS);
+            }
 
             foreach(var plot in plots)
             {
                 plot.Value.Draw();
             }
 
+
             GL.End();
             GL.PopMatrix();
 
-            texture.ReadPixels(new Rect(0, 0, WidthInTexels, HeightInTexels), 0, 0);
-
-            texture.Apply();
 
             RenderTexture.active = null;
-            RenderTexture.ReleaseTemporary(rt);
 
             needsUpdate = false;
         }
@@ -466,8 +474,13 @@ public class ProPlotter : MonoBehaviour {
     /// <param name="plotName">Name of the line to add to</param>
     /// <param name="horizontalValue">x coordinate of point</param>
     /// <param name="verticalValue">y coordinate of point</param>
-    public void AddPoint(string plotName, float horizontalValue, float verticalValue)
+    /// <returns>whether the point was successfully added</returns>
+    public bool AddPoint(string plotName, float horizontalValue, float verticalValue)
     {
+        if(!plots.ContainsKey(plotName)) {
+            return false;
+        }
+
         if(AutoScale && verticalValue>VerticalMax)
         {
             VerticalMax = verticalValue;
@@ -480,6 +493,8 @@ public class ProPlotter : MonoBehaviour {
         plots[plotName].AddPoint(horizontalValue, verticalValue);
 
         needsUpdate = true;
+
+        return true;
     }
 
     float LastValue
@@ -604,6 +619,8 @@ public class ProPlotter : MonoBehaviour {
 
         void Draw(Queue<Vector2> pointsToDraw, Color colour)
         {
+            Vector2[] pointarray = pointsToDraw.ToArray(); // faster to do this because foreach is slow
+
             GL.Color(colour);
 
             bool first = true;
@@ -612,31 +629,50 @@ public class ProPlotter : MonoBehaviour {
             float x1 = 0;
             float y1 = 0;
 
-            foreach (Vector2 point in pointsToDraw)
+            //performance critical, so optimise calls
+            float ll = parent.LeftLimit;
+            float vm = parent.VerticalMin;
+            float hr = parent.HorizontalRange;
+            float vr = parent.VerticalRange;
+            bool fill = parent.fill;
+
+            int hit = parent.HeightInTexels;
+
+            for (int i = 0; i < pointarray.Length; i++ )
             {
                 x0 = x1;
                 y0 = y1;
 
-                x1 = (point.x - parent.LeftLimit) / parent.HorizontalRange;
-                y1 = (point.y - parent.VerticalMin) / parent.VerticalRange;
+                x1 = (pointarray[i].x - ll) / hr;
+                y1 = (pointarray[i].y - vm) / vr;
 
                 // clamp data inside to within our draw range
-                if (y1 >= parent.HeightInTexels)
-                {
-                    y1 = parent.HeightInTexels - 1;
-                }
+                //if (y1 >= hit)
+                //{
+                //    y1 = hit - 1;
+                //}
 
-                if (y1 < 0)
-                {
-                    y1 = 0;
-                }
-                
-                if(first)
+                //if (y1 < 0)
+                //{
+                //    y1 = 0;
+                //}
+
+                if (first)
                 {
                     first = false;
-                } else
+                }
+                else
                 {
-                    parent.DrawLine(x0, y0, x1, y1);
+                    // let's manually inline this
+                    //parent.DrawLine(x0, y0, x1, y1);
+                    GL.Vertex3(x0, y0, 0);
+                    GL.Vertex3(x1, y1, 0);
+
+                    if (fill)
+                    {
+                        GL.Vertex3(x1, 0, 0);
+                        GL.Vertex3(x0, 0, 0);
+                    }
                 }
             }
         }

@@ -19,7 +19,7 @@ public class Interface : MonoBehaviour {
     public Text money;
 
 
-    // set up the parts of teh game's interface that are more easily done centrally
+    // set up the parts of the game's interface that are more easily done centrally
 	void Start () {
         plotter.NewPlot("supply", Color.green);
         plotter.NewPlot("demand", Color.red);
@@ -81,8 +81,23 @@ public class Interface : MonoBehaviour {
             
         }
 
-        plotter.AddPoint("supply", displaytime, GameManager.instance.supply);
+        //plotter.AddPoint("supply", displaytime, GameManager.instance.supply);
+
+        float cumulativevalue = 0f;
+
+        foreach (var supply in GameManager.instance.supplyByType)
+        {
+            cumulativevalue += supply.Value;
+            if (!plotter.AddPoint(supply.Key.ToString(), displaytime, cumulativevalue))
+            {
+                plotter.NewPlot(supply.Key.ToString(), new Color(Random.value, Random.value, Random.value));
+                plotter.AddPoint(supply.Key.ToString(), displaytime, cumulativevalue);
+            }
+        }
+
+
         plotter.AddPoint("demand", displaytime, GameManager.instance.demand);
+        plotter.AddPoint("supply", displaytime, GameManager.instance.supply);
 
         //surplus.AddPoint("surplus", displaytime, GameManager.instance.surplus);
 
