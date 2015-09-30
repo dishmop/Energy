@@ -83,17 +83,17 @@ public class Interface : MonoBehaviour {
 
         //plotter.AddPoint("supply", displaytime, GameManager.instance.supply);
 
-        float cumulativevalue = 0f;
+        //float cumulativevalue = 0f;
 
-        foreach (var supply in GameManager.instance.supplyByType)
-        {
-            cumulativevalue += supply.Value;
-            if (!plotter.AddPoint(supply.Key.ToString(), displaytime, cumulativevalue))
-            {
-                plotter.NewPlot(supply.Key.ToString(), new Color(Random.value, Random.value, Random.value));
-                plotter.AddPoint(supply.Key.ToString(), displaytime, cumulativevalue);
-            }
-        }
+        //foreach (var supply in GameManager.instance.supplyByType)
+        //{
+        //    cumulativevalue += supply.Value;
+        //    if (!plotter.AddPoint(supply.Key.ToString(), displaytime, cumulativevalue))
+        //    {
+        //        plotter.NewPlot(supply.Key.ToString(), new Color(Random.value, Random.value, Random.value));
+        //        plotter.AddPoint(supply.Key.ToString(), displaytime, cumulativevalue);
+        //    }
+        //}
 
 
         plotter.AddPoint("demand", displaytime, GameManager.instance.demand);
