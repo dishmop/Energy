@@ -88,12 +88,14 @@
     <Compile Include="Assets\Scripts\Interface\Globals.cs" />
     <Compile Include="Assets\Scripts\Interface\Interface.cs" />
     <Compile Include="Assets\Scripts\Interface\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\Interface\QuitOnEsc.cs" />
     <Compile Include="Assets\Scripts\Interface\ResearchPanel.cs" />
     <Compile Include="Assets\Scripts\Interface\Researchables\CustomerResearchable.cs" />
     <Compile Include="Assets\Scripts\Interface\Researchables\GeneratorResearchable.cs" />
     <Compile Include="Assets\Scripts\Interface\Researchables\Music.cs" />
     <Compile Include="Assets\Scripts\Interface\Researchables\Researchable.cs" />
     <Compile Include="Assets\Scripts\Interface\Researchables\TimeBoost.cs" />
+    <Compile Include="Assets\Scripts\Interface\SetupResolution.cs" />
     <Compile Include="Assets\Scripts\Interface\SortCustomers.cs" />
     <Compile Include="Assets\Scripts\Interface\SortGenerators.cs" />
     <Compile Include="Assets\Scripts\Interface\SortResearchables.cs" />
@@ -102,6 +104,7 @@
     <Compile Include="Assets\Scripts\Utilities\ShowToolTip.cs" />
     <Compile Include="Assets\Scripts\Utilities\ToolTip.cs" />
     <Compile Include="Assets\Scripts\Utilities\Utilities.cs" />
+    <Compile Include="Assets\quitbutton.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
 </Project>

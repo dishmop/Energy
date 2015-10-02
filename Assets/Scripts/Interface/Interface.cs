@@ -126,4 +126,9 @@ public class Interface : MonoBehaviour {
 
         carbonText.text = "Total greenhouse emissions: " + ProPlotter.SIPrefix(GameManager.instance.totalCarbon) + "g (equiv. as CO2)";
     }
+
+    public void Quit()
+    {
+        Application.LoadLevel(0);
+    }
 }
