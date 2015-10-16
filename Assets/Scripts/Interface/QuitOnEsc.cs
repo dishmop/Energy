@@ -22,20 +22,27 @@ public class QuitOnEsc : MonoBehaviour {
 		}
 	}
 	
+	void OnApplicationQuit(){
+		#if !UNITY_EDITOR
+		if (finalQuitURL != ""){
+			Application.OpenURL(finalQuitURL);
+		}
+		#endif
+	}
+	
 	//#if UNITY_WEBPLAYER
 	//#endif
 	public void Quit()
 	{
 		#if UNITY_EDITOR
+
 		UnityEditor.EditorApplication.isPlaying = false;
 		#elif UNITY_WEBPLAYER
-		if (finalQuitURL != ""){
-			Application.OpenURL(finalQuitURL);
-		}
+			if (finalQuitURL != ""){
+				Application.OpenURL(finalQuitURL);
+			}
 		#else
-		if (finalQuitURL != ""){
-			Application.OpenURL(finalQuitURL);
-		}
+
 		Application.Quit();
 		#endif
 	}
