@@ -3,7 +3,6 @@ using System.Collections;
 
 public class SetupResolution : MonoBehaviour {
 
-	int count = 0;
 	static bool firstTime = true;
 	
 	

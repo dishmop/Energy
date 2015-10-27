@@ -636,7 +636,7 @@ public class ProPlotter : MonoBehaviour {
             float vr = parent.VerticalRange;
             bool fill = parent.fill;
 
-            int hit = parent.HeightInTexels;
+//            int hit = parent.HeightInTexels;
 
             for (int i = 0; i < pointarray.Length; i++ )
             {

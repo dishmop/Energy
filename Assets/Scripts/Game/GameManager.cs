@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.Analytics;
 
 public class GameManager : MonoBehaviour {
     public static GameManager instance;
@@ -19,6 +20,8 @@ public class GameManager : MonoBehaviour {
     public float totalCarbon = 0.0f; // in g
 
     public ulong money = 0; // in £ 
+    
+	ulong recMoneyExp = 0;
 
     CustomerManager customerDemand;
     public List<Generator> generators = new List<Generator>();
@@ -27,6 +30,8 @@ public class GameManager : MonoBehaviour {
 
     float prevSample = 0;
     float nextSample = 0;
+    
+    
 
     float timeSinceSample = float.PositiveInfinity;
 
@@ -39,6 +44,8 @@ public class GameManager : MonoBehaviour {
         day
     }
 
+	int recMonths = 0;
+	
     int dayssincepc = 0;
 
     PayLevel pay = PayLevel.none;
@@ -47,12 +54,41 @@ public class GameManager : MonoBehaviour {
     {
         instance = this;
         customerDemand = new CustomerManager();
+//		Debug.Log ("startGame");
+		Analytics.CustomEvent("startGame", new Dictionary<string, object>
+		                      {
+			{ "dummy", 0 },
+		});
     }
 
     Queue<float> handGenAngVel = new Queue<float>();
 
     void Update()
     {
+    
+		if (money > Mathf.Pow (10, recMoneyExp)){
+		//	Debug.Log ("moneyGain - threshold = " + Mathf.Pow (10, recMoneyExp).ToString()  + ", gameTime : " + UnityEngine.Time.timeSinceLevelLoad);
+			
+			Analytics.CustomEvent("moneyGain", new Dictionary<string, object>
+			{
+				{ "threshold", Mathf.Pow (10, recMoneyExp).ToString() },
+				{ "gameTime", UnityEngine.Time.timeSinceLevelLoad},
+			});
+			
+			recMoneyExp++;
+		}
+		
+		if (Time.instance.Month-7 != recMonths ){
+		//	Debug.Log ("monthInc - currentMonth = " + (Time.instance.Month-7).ToString()  + ", gameTime : " + UnityEngine.Time.timeSinceLevelLoad);
+			Analytics.CustomEvent("monthInc", new Dictionary<string, object>
+			                      {
+				{ "currentMonth", (Time.instance.Month-7).ToString() },
+				{ "gameTime", UnityEngine.Time.timeSinceLevelLoad},
+			});
+			
+			recMonths = Time.instance.Month - 7;
+			
+		}
         timeSinceSample += Time.instance.DeltaTime;
 
         sampleInterval = 0.05f / (customerDemand.TotalCustomers > 0 ? customerDemand.TotalCustomers : 1);

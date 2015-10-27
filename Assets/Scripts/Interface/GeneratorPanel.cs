@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.Analytics;
 
 public class GeneratorPanel : BuySellPanel {
 
@@ -96,6 +98,15 @@ public class GeneratorPanel : BuySellPanel {
                 activeSlider.value++;
                 Number++;
             }
+            
+//			Debug.Log ("buyGenerators - numToBuy: " + number + "type = " + this.Type + ", totalNumGenerators: " + Number + ", gameTime : " + UnityEngine.Time.timeSinceLevelLoad);
+			Analytics.CustomEvent("buyGenerators", new Dictionary<string, object>
+			{
+				{ "numToBuy", number },
+				{ "type", this.Type  },
+				{ "totalNumGenerators", Number},
+				{ "gameTime", UnityEngine.Time.timeSinceLevelLoad},
+			});				
         }
     }
 
@@ -110,6 +121,14 @@ public class GeneratorPanel : BuySellPanel {
                 GameManager.instance.generators.RemoveAt(index);
                 GameManager.instance.money += (ulong)SellCost;
             }
+//			Debug.Log ("sellGenerators - numToSell: " + number + "type = " + this.Type + ", totalNumGenerators: " + Number + ", gameTime : " + UnityEngine.Time.timeSinceLevelLoad);
+			Analytics.CustomEvent("sellGenerators", new Dictionary<string, object>
+			{
+				{ "numToSell", number },
+				{ "type", this.Type  },
+				{ "totalNumGenerators", Number},
+				{ "gameTime", UnityEngine.Time.timeSinceLevelLoad},
+			});			
         }
     }
 }

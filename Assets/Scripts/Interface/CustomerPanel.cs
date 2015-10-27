@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using UnityEngine.Analytics;
 
 public class CustomerPanel : BuySellPanel
 {
@@ -31,6 +33,14 @@ public class CustomerPanel : BuySellPanel
         {
             AudioSource.PlayClipAtPoint(Globals.instance.clicklow, transform.position);
             CustomerManager.instance.numCustomers[Id] += number;
+//			Debug.Log ("buyCustomers - numToBuy: " + number + ", id :" + Id + ", totalNumCustomers: " + CustomerManager.instance.numCustomers[Id] + ", gameTime : " + UnityEngine.Time.timeSinceLevelLoad);
+			Analytics.CustomEvent("buyCustomers", new Dictionary<string, object>
+			{
+				{ "numToBuy", number },
+				{ "id", Id.ToString() },
+				{ "totalNumCustomers", CustomerManager.instance.numCustomers[Id]},
+				{ "gameTime", UnityEngine.Time.timeSinceLevelLoad},
+			});			
         }
     }
 
@@ -40,6 +50,15 @@ public class CustomerPanel : BuySellPanel
         {
             AudioSource.PlayClipAtPoint(Globals.instance.clicklow, transform.position);
             CustomerManager.instance.numCustomers[Id] -= number;
+//			Debug.Log ("sellCustomers - numToSell: " + number + ", id :" + Id + ", totalNumCustomers: " + CustomerManager.instance.numCustomers[Id] + ", gameTime : " + UnityEngine.Time.timeSinceLevelLoad);
+			Analytics.CustomEvent("sellCustomers", new Dictionary<string, object>
+			{
+				{ "numToSell", number },
+				{ "id", Id.ToString() },
+				{ "totalNumCustomers", CustomerManager.instance.numCustomers[Id]},
+				{ "gameTime", UnityEngine.Time.timeSinceLevelLoad},
+			});
+			
         }
     }
 }
