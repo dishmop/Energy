@@ -1,45 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Game/GameManager.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../Leccy/Assets/Scripts/GameModeManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Interface/SetupResolution.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Interface/QuitOnEsc.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Interface/BuySellButton.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Interface/BuySellPanel.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Interface/CustomerPanel.cs" Line="44" Column="197" />
-      <File FileName="Assets/Scripts/Interface/GeneratorPanel.cs" Line="100" Column="170" />
-      <File FileName="Assets/Scripts/Interface/ResearchPanel.cs" Line="93" Column="64" />
-      <File FileName="Assets/Scripts/Interface/Globals.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Game/GameManager.cs" Line="46" Column="14" />
-      <File FileName="Assets/Scripts/Interface/Researchables/CustomerResearchable.cs" Line="13" Column="6" />
-      <File FileName="Assets/Scripts/Interface/Researchables/GeneratorResearchable.cs" Line="16" Column="6" />
-      <File FileName="Assets/Scripts/Interface/Researchables/Researchable.cs" Line="20" Column="17" />
-      <File FileName="Assets/Scripts/Game/EnergyProfile.cs" Line="35" Column="10" />
-      <File FileName="Assets/Scripts/Game/CustomerManager.cs" Line="54" Column="1" />
+      <File FileName="../Leccy/Assets/Scripts/GameModeManager.cs" Line="122" Column="1" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="Assembly-CSharp" expanded="True">
-            <Node name="Scripts" expanded="True">
-              <Node name="Game" expanded="True">
-                <Node name="GameManager.cs" selected="True" />
-              </Node>
-              <Node name="Interface" expanded="True">
-                <Node name="Researchables" expanded="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State>
-          <Value>value</Value>
-          <Value>bounds</Value>
-          <Value>renderer.bounds</Value>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
