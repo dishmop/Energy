@@ -1,8 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../Leccy/Assets/Scripts/GameModeManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Game/GameManager.cs">
     <Files>
-      <File FileName="../Leccy/Assets/Scripts/GameModeManager.cs" Line="122" Column="1" />
+      <File FileName="Assets/Scripts/Game/GameManager.cs" Line="4" Column="1" />
+      <File FileName="Assets/Scripts/Interface/GeneratorPanel.cs" Line="4" Column="5" />
+      <File FileName="Assets/Scripts/Interface/CustomerPanel.cs" Line="5" Column="5" />
+      <File FileName="Assets/Scripts/Interface/ResearchPanel.cs" Line="96" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

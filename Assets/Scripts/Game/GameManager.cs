@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using UnityEngine.Analytics;
+//using UnityEngine.Analytics;
 
 public class GameManager : MonoBehaviour {
     public static GameManager instance;
@@ -55,10 +55,13 @@ public class GameManager : MonoBehaviour {
         instance = this;
         customerDemand = new CustomerManager();
 //		Debug.Log ("startGame");
-		Analytics.CustomEvent("startGame", new Dictionary<string, object>
-		                      {
-			{ "dummy", 0 },
-		});
+		GoogleAnalytics.Client.SendEventHit("gameFlow", "startGame");
+		GoogleAnalytics.Client.SendScreenHit("startGame" + name);
+//		
+//		Analytics.CustomEvent("startGame", new Dictionary<string, object>
+//		                      {
+//			{ "dummy", 0 },
+//		});
     }
 
     Queue<float> handGenAngVel = new Queue<float>();
@@ -68,23 +71,25 @@ public class GameManager : MonoBehaviour {
     
 		if (money > Mathf.Pow (10, recMoneyExp)){
 		//	Debug.Log ("moneyGain - threshold = " + Mathf.Pow (10, recMoneyExp).ToString()  + ", gameTime : " + UnityEngine.Time.timeSinceLevelLoad);
-			
-			Analytics.CustomEvent("moneyGain", new Dictionary<string, object>
-			{
-				{ "threshold", Mathf.Pow (10, recMoneyExp).ToString() },
-				{ "gameTime", UnityEngine.Time.timeSinceLevelLoad},
-			});
+			GoogleAnalytics.Client.SendTimedEventHit("gameFlow", "moneyThreshold", Mathf.Pow (10, recMoneyExp).ToString(), UnityEngine.Time.timeSinceLevelLoad);
+			GoogleAnalytics.Client.SendScreenHit("moneyThreshold_" +  Mathf.Pow (10, recMoneyExp).ToString());
+//			Analytics.CustomEvent("moneyGain", new Dictionary<string, object>
+//			{
+//				{ "threshold", Mathf.Pow (10, recMoneyExp).ToString() },
+//				{ "gameTime", UnityEngine.Time.timeSinceLevelLoad},
+//			});
 			
 			recMoneyExp++;
 		}
 		
 		if (Time.instance.Month-7 != recMonths ){
 		//	Debug.Log ("monthInc - currentMonth = " + (Time.instance.Month-7).ToString()  + ", gameTime : " + UnityEngine.Time.timeSinceLevelLoad);
-			Analytics.CustomEvent("monthInc", new Dictionary<string, object>
-			                      {
-				{ "currentMonth", (Time.instance.Month-7).ToString() },
-				{ "gameTime", UnityEngine.Time.timeSinceLevelLoad},
-			});
+			GoogleAnalytics.Client.SendTimedEventHit("gameFlow", "monthInc", "currentMonth" + (Time.instance.Month-7).ToString() , UnityEngine.Time.timeSinceLevelLoad);
+//			Analytics.CustomEvent("monthInc", new Dictionary<string, object>
+//			                      {
+//				{ "currentMonth", (Time.instance.Month-7).ToString() },
+//				{ "gameTime", UnityEngine.Time.timeSinceLevelLoad},
+//			});
 			
 			recMonths = Time.instance.Month - 7;
 			

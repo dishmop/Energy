@@ -2,8 +2,8 @@
 using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.EventSystems;
-using System.Collections.Generic;
-using UnityEngine.Analytics;
+//using System.Collections.Generic;
+//using UnityEngine.Analytics;
 
 public class ResearchPanel : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler {
     public static ResearchPanel instance;
@@ -93,12 +93,14 @@ public class ResearchPanel : MonoBehaviour, IPointerExitHandler, IPointerEnterHa
     public void AddCustomer(string name, int id, string description, Sprite image)
     {
 //		Debug.Log ("researchCustomer - name: " + name + ", id :" + id + ", gameTime : " + UnityEngine.Time.timeSinceLevelLoad);
-		Analytics.CustomEvent("researchCustomer", new Dictionary<string, object>
-		                      {
-			{ "name", name },
-			{ "id", id.ToString()  },
-			{ "gameTime", UnityEngine.Time.timeSinceLevelLoad},
-		});			
+		GoogleAnalytics.Client.SendTimedEventHit("gameAction", "researchCustomer", name, UnityEngine.Time.timeSinceLevelLoad);
+//		
+//		Analytics.CustomEvent("researchCustomer", new Dictionary<string, object>
+//		                      {
+//			{ "name", name },
+//			{ "id", id.ToString()  },
+//			{ "gameTime", UnityEngine.Time.timeSinceLevelLoad},
+//		});			
 		
         var panel = (GameObject)Instantiate(Globals.instance.custPrefab);
         panel.transform.SetParent(custPanel.transform, false);
@@ -115,12 +117,13 @@ public class ResearchPanel : MonoBehaviour, IPointerExitHandler, IPointerEnterHa
     public void AddGenerator(string name, int cost, int saleCost, string type, string description, Sprite image)
     {
 //		Debug.Log ("researchGenerator - name: " + name + ", type :" + type + ", gameTime : " + UnityEngine.Time.timeSinceLevelLoad);
-		Analytics.CustomEvent("researchGenerator", new Dictionary<string, object>
-		{
-			{ "name", name },
-			{ "type", type  },
-			{ "gameTime", UnityEngine.Time.timeSinceLevelLoad},
-		});			
+		GoogleAnalytics.Client.SendTimedEventHit("gameAction", "researchGenerator", name, UnityEngine.Time.timeSinceLevelLoad);
+//		Analytics.CustomEvent("researchGenerator", new Dictionary<string, object>
+//		{
+//			{ "name", name },
+//			{ "type", type  },
+//			{ "gameTime", UnityEngine.Time.timeSinceLevelLoad},
+//		});			
         var panel = (GameObject)Instantiate(Globals.instance.genPrefab);
         panel.transform.SetParent(genPanel.transform, false);
 
