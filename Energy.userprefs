@@ -1,11 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Game/GameManager.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../Materialist/Assets/Extensions/GoogleAnalytics/Core/GoogleAnalyticsClient.cs">
     <Files>
-      <File FileName="Assets/Scripts/Game/GameManager.cs" Line="4" Column="1" />
-      <File FileName="Assets/Scripts/Interface/GeneratorPanel.cs" Line="4" Column="5" />
-      <File FileName="Assets/Scripts/Interface/CustomerPanel.cs" Line="5" Column="5" />
-      <File FileName="Assets/Scripts/Interface/ResearchPanel.cs" Line="96" Column="3" />
+      <File FileName="../Materialist/Assets/Extensions/GoogleAnalytics/Core/GoogleAnalytics.cs" Line="202" Column="25" />
+      <File FileName="../Materialist/Assets/Extensions/GoogleAnalytics/Core/GoogleAnalyticsClient.cs" Line="679" Column="58" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
