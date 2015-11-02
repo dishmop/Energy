@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour {
         customerDemand = new CustomerManager();
 //		Debug.Log ("startGame");
 		GoogleAnalytics.Client.SendEventHit("gameFlow", "startGame");
-		GoogleAnalytics.Client.SendScreenHit("startGame" + name);
+		GoogleAnalytics.Client.SendScreenHit("startGame");
 //		
 //		Analytics.CustomEvent("startGame", new Dictionary<string, object>
 //		                      {
